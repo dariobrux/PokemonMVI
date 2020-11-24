@@ -1,10 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.20"
+
+    ext {
+        koin_version = "2.1.5"
+        kotlin_version = "1.4.20"
+        uniflow_version = "0.11.6"
+    }
+
     repositories {
         google()
         jcenter()
     }
+    
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
