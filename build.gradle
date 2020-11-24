@@ -2,6 +2,7 @@
 buildscript {
 
     ext {
+        koin_version = "2.1.5"
         kotlin_version = "1.4.20"
         uniflow_version = "0.11.6"
     }
