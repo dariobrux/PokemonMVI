@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.domain.usecase.pokemon
+package com.dariobrux.pokemon.domain.usecase
 
 class LoadPokemonList(private val getPokemonList: GetPokemonList) {
 

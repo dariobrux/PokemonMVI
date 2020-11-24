@@ -1,6 +1,6 @@
 package com.dariobrux.pokemon.ui.splash
 
-import com.dariobrux.pokemon.domain.usecase.pokemon.LoadPokemonList
+import com.dariobrux.pokemon.domain.usecase.LoadPokemonList
 import io.uniflow.androidx.flow.AndroidDataFlow
 import io.uniflow.core.flow.data.UIEvent
 import io.uniflow.core.flow.data.UIState

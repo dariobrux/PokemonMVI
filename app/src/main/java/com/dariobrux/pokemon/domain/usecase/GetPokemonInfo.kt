@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.domain.usecase.pokemon
+package com.dariobrux.pokemon.domain.usecase
 
 import com.dariobrux.pokemon.data.repository.IPokemonRepository
 import com.dariobrux.pokemon.domain.model.Pokemon
