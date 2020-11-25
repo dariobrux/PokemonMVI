@@ -37,7 +37,7 @@ class SplashFragment : Fragment() {
                 is UIState.Failed -> showError(state.error)
             }
         }
-        viewModel.getPokemonList()
+        viewModel.getPokemonList(0, 1117)
     }
 
     override fun onDestroyView() {

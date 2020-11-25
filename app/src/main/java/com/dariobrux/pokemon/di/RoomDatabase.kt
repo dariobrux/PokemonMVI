@@ -1,16 +1,21 @@
 package com.dariobrux.pokemon.di
 
+import androidx.room.Room
+import com.dariobrux.pokemon.data.datasource.database.PokemonDatabase
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val roomDatabaseModule = module {
 
-//    // Weather Room Data Repository
-//    single<WeatherEntityRepository>(override = true) { WeatherEntityPersistentRepositoryImpl(get(), get()) }
-//    // Room Database
-//    single {
-//        Room.databaseBuilder(androidApplication(), WeatherDatabase::class.java, "weather-db")
-//                .build()
-//    }
-//    // Expose WeatherDAO
-//    single { get<WeatherDatabase>().weatherDAO() }
+//    // Pokemon Room Data Repository
+//    single<IPokemonRepository>(override = true) { PokemonPersistentRepository(get(), get()) }
+
+    // Room Database
+    single {
+        Room.databaseBuilder(androidApplication(), PokemonDatabase::class.java, "pokemon-db")
+            .build()
+    }
+
+    // Expose PokemonDAO
+    single { get<PokemonDatabase>().pokemonDAO() }
 }

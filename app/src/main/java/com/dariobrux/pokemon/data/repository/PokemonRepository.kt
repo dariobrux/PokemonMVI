@@ -1,51 +1,73 @@
 package com.dariobrux.pokemon.data.repository
 
+import com.dariobrux.pokemon.data.datasource.database.PokemonDAO
+import com.dariobrux.pokemon.data.datasource.database.PokemonEntity
+import com.dariobrux.pokemon.data.datasource.webservice.PokemonDataSource
 import com.dariobrux.pokemon.domain.model.Pokemon
+import timber.log.Timber
 
-/**
- * Weather repository
- * Make use of WeatherDataSource & add some cache
- */
-class PokemonRepository(/*private val weatherDatasource: WeatherDataSource*/) : IPokemonRepository {
+class PokemonRepository(private val dataSource: PokemonDataSource, private val dao: PokemonDAO) : IPokemonRepository {
 
-    override suspend fun getPokemonList(location: String?): List<Pokemon> {
-        //TODO("Not yet implemented")
-        return listOf()
+    override suspend fun getPokemonList(offset: Int, limit: Int): List<Pokemon> {
+
+        var pokemonList: List<Pokemon> = kotlin.runCatching {
+            dao.getPokemonList(offset, limit)
+        }.mapCatching {
+            it?.run {
+                Timber.tag(TAG).d("Pokemon retrieved from database.")
+                map { entity ->
+                    Pokemon(entity.name)
+                }
+            } ?: emptyList()
+        }.onFailure {
+            emptyList<Pokemon>()
+        }.getOrElse {
+            Timber.tag(TAG).d("No Pokemon in database.")
+            emptyList()
+        }
+
+        if (pokemonList.isEmpty()) {
+
+            Timber.tag(TAG).d("Trying to retrieve the pokemon list from webService.")
+
+            kotlin.runCatching {
+                dataSource.getPokemonListAsync(offset, limit).await()
+            }.mapCatching {
+                it.pokemonList
+            }.onSuccess {
+                it?.run {
+                    Timber.tag(TAG).d("Pokemon retrieved from webService.")
+                    pokemonList = it
+                } ?: emptyList<Pokemon>()
+            }.onFailure {
+                Timber.tag(TAG).w("Problems while retrieve the pokemon list. Error message: $it")
+                emptyList<Pokemon>()
+            }
+
+            pokemonList.map {
+                PokemonEntity(it.name)
+            }.let {
+                kotlin.runCatching {
+                    dao.insertPokemonList(it)
+                }.onSuccess {
+                    Timber.tag(TAG).d("Insert the pokemon list in the database.")
+                }.onFailure {
+                    Timber.tag(TAG).d("Failed inserting the pokemon list in the database.")
+                }
+            }
+        }
+
+        Timber.tag(TAG).d("Pokemon list: $pokemonList")
+
+        return pokemonList
     }
 
     override suspend fun getPokemonDetail(id: String): Pokemon {
         //TODO("Not yet implemented")
         return Pokemon("Ciao")
     }
+
+    companion object {
+        private const val TAG = "PokemonRepository"
+    }
 }
-//    WeatherEntityRepository {
-//
-//    private val weatherCache = arrayListOf<WeatherEntity>()
-//
-//    private fun lastLocationFromCache() = weatherCache.firstOrNull()?.location
-//
-//    override suspend fun getWeatherDetail(
-//        id: DailyForecastId): DailyForecast = weatherCache.first { it.id == id.value }.mapToDailyForecast()
-//
-//    override suspend fun getWeather(
-//        location: String?
-//    ): List<DailyForecast> {
-//        // Take cache
-//        return if (isAlreadyInCache(location)) weatherCache.mapToDailyForecasts()
-//        else {
-//            weatherCache.clear()
-//
-//            val targetLocation: String = location ?: lastLocationFromCache() ?: DEFAULT_LOCATION
-//
-//            val (lat, lng) = weatherDatasource.geocode(targetLocation).await().mapToLocation() ?: error(
-//                "Can't map to location: '$targetLocation'")
-//
-//            val weather: List<WeatherEntity> = weatherDatasource.weather(lat, lng,
-//                DEFAULT_LANG).await().mapToWeatherEntities(targetLocation)
-//
-//            weatherCache.addAll(weather)
-//            weather.mapToDailyForecasts()
-//        }
-//    }
-//
-//    private fun isAlreadyInCache(location: String?) = location == null && weatherCache.isNotEmpty()
