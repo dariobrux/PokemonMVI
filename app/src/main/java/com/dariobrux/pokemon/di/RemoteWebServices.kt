@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * Remote Web Service datasource
@@ -35,7 +35,7 @@ inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String)
     val retrofit = Retrofit.Builder()
         .baseUrl(url)
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
     return retrofit.create(T::class.java)

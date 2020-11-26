@@ -2,6 +2,8 @@ package com.dariobrux.pokemon.domain.model
 
 data class Pokemon(
 
-    var name: String,
+    var name: String? = "",
 
-    var url: String = "")
+    var url: String? = ""
+
+)

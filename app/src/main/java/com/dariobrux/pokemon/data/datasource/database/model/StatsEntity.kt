@@ -12,6 +12,6 @@ data class StatsEntity(
     var name: String = "",
 
     @NonNull
-    var value: Double = 0.0
+    var value: Int = 0
 
 )
