@@ -4,7 +4,7 @@ import com.dariobrux.pokemon.data.repository.IPokemonRepository
 import com.dariobrux.pokemon.data.repository.PokemonRepository
 import com.dariobrux.pokemon.domain.usecase.GetPokemonInfo
 import com.dariobrux.pokemon.domain.usecase.GetPokemonList
-import com.dariobrux.pokemon.ui.splash.SplashViewModel
+import com.dariobrux.pokemon.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val appModule = module {
     // ViewModels
 //    viewModel { (id: DailyForecastId) -> DetailViewModel(id, get()) }
-    viewModel { SplashViewModel(get()) }
+    viewModel { MainViewModel(get()) }
 //    viewModel { WeatherListViewModel(get(), get()) }
 
     // Use cases

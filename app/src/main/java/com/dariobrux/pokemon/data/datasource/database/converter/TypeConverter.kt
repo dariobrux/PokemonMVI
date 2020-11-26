@@ -1,7 +1,6 @@
 package com.dariobrux.pokemon.data.datasource.database.converter
 
 import androidx.room.TypeConverter
-import com.dariobrux.pokemon.data.datasource.database.model.StatsEntity
 import com.dariobrux.pokemon.data.datasource.database.model.TypeEntity
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -11,7 +10,7 @@ import java.lang.reflect.Type
 class TypeConverter {
 
     private val moshi = Moshi.Builder().build()
-    private val type: Type = Types.newParameterizedType(MutableList::class.java, StatsEntity::class.java)
+    private val type: Type = Types.newParameterizedType(MutableList::class.java, TypeEntity::class.java)
 
     @TypeConverter
     fun toJson(list: List<TypeEntity>): String {

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dariobrux.pokemon.R
-import com.dariobrux.pokemon.ui.splash.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InfoFragment : Fragment() {

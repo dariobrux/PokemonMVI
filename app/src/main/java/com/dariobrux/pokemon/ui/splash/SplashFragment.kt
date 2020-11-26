@@ -1,10 +1,14 @@
 package com.dariobrux.pokemon.ui.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.BounceInterpolator
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.dariobrux.pokemon.R
@@ -12,11 +16,11 @@ import com.dariobrux.pokemon.databinding.FragmentSplashBinding
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIError
 import io.uniflow.core.flow.data.UIState
+import kotlinx.coroutines.*
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment() {
-
-    private val viewModel: SplashViewModel by viewModel()
 
     // Binding
     private var _binding: FragmentSplashBinding? = null
@@ -24,20 +28,34 @@ class SplashFragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
+    private val activityScope = CoroutineScope(Dispatchers.Main)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        onStates(viewModel) { state ->
-            when (state) {
-                is UIState.Loading -> showIsLoading()
-                is UIState.Success -> showIsLoaded()
-                is UIState.Failed -> showError(state.error)
-            }
+        binding.imgSplash.scaleX = 0f
+        binding.imgSplash.scaleY = 0f
+        binding.imgSplash.alpha = 0.3f
+        binding.imgSplash.animate().scaleX(0.5f).scaleY(0.5f).alpha(0.75f).setDuration(1000).setInterpolator(AnticipateOvershootInterpolator()).withEndAction {
+            binding.imgSplash.animate().rotation(360f).scaleX(1f).scaleY(1f).alpha(1f).setDuration(2000).setInterpolator(BounceInterpolator()).start()
+        }.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        activityScope.launch {
+            delay(3500)
+            NavHostFragment.findNavController(this@SplashFragment).navigate(R.id.action_splashFragment_to_mainFragment)
         }
-        viewModel.getPokemonList(0, 1117)
+    }
+
+    override fun onPause() {
+        activityScope.cancel()
+        super.onPause()
     }
 
     override fun onDestroyView() {
@@ -52,15 +70,5 @@ class SplashFragment : Fragment() {
 
     private fun showIsLoaded() {
         NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_mainFragment)
-    }
-
-    private fun showError(error: UIError?) {
-//        splashIcon.visibility = View.GONE
-//        splashIconFail.visibility = View.VISIBLE
-//        Snackbar.make(splash, "SplashActivity got error : $error", Snackbar.LENGTH_INDEFINITE)
-//            .setAction(R.string.retry) {
-//                splashViewModel.getLastWeather()
-//            }
-//            .show()
     }
 }
