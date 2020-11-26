@@ -2,10 +2,12 @@ package com.dariobrux.pokemon.data.datasource.webservice
 
 import com.dariobrux.pokemon.domain.model.DataInfo
 import com.dariobrux.pokemon.domain.model.Pokemon
+import com.dariobrux.pokemon.domain.model.PokemonInfo
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 /**
  * Weather datasource - Retrofit tagged
@@ -20,5 +22,8 @@ interface PokemonDataSource {
      */
     @GET("api/v2/pokemon")
     fun getPokemonListAsync(@Query("offset") offset: Int, @Query("limit") limit: Int): Deferred<DataInfo>
+
+    @GET
+    fun getPokemonInfoAsync(@Url url: String): Deferred<PokemonInfo>
 
 }

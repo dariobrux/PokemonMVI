@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 
 /**
  *
@@ -39,6 +40,9 @@ interface PokemonDAO {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPokemonList(pokemonList: List<PokemonEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPokemon(pokemon: PokemonEntity)
 
 //    /**
 //     * Add a pokemon in the database.

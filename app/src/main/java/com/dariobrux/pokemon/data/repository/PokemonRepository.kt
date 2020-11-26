@@ -1,9 +1,9 @@
 package com.dariobrux.pokemon.data.repository
 
+import com.dariobrux.pokemon.common.toPokemonEntity
 import com.dariobrux.pokemon.common.toPokemonEntityList
 import com.dariobrux.pokemon.common.toPokemonList
 import com.dariobrux.pokemon.data.datasource.database.PokemonDAO
-import com.dariobrux.pokemon.data.datasource.database.PokemonEntity
 import com.dariobrux.pokemon.data.datasource.webservice.PokemonDataSource
 import com.dariobrux.pokemon.domain.model.Pokemon
 import timber.log.Timber
@@ -15,7 +15,6 @@ class PokemonRepository(private val dataSource: PokemonDataSource, private val d
         var pokemonList: List<Pokemon> = emptyList()
 
         kotlin.runCatching {
-            Timber.tag(TAG).d("Trying to retrieve the Pokemon list from Database.")
             dao.getPokemonList(offset, limit)
         }.onSuccess {
             if (!it.isNullOrEmpty()) {
@@ -27,31 +26,19 @@ class PokemonRepository(private val dataSource: PokemonDataSource, private val d
         }
 
         if (pokemonList.isEmpty()) {
-
             kotlin.runCatching {
-                Timber.tag(TAG).d("Trying to retrieve the Pokemon list from WebService.")
-                dataSource.getPokemonListAsync(offset, limit).await()
-            }.onSuccess {
-                if (!it.pokemonList.isNullOrEmpty()) {
+                dataSource.getPokemonListAsync(offset, limit).await().pokemonList?.let {
                     Timber.tag(TAG).d("Pokemon retrieved from WebService.")
-                    pokemonList = it.pokemonList!!
+                    it.forEach { pokemon ->
+                        Timber.tag(TAG).d("Storing ${pokemon.name}...")
+                        val pokemonInfo = dataSource.getPokemonInfoAsync(pokemon.url).await()
+                        dao.insertPokemon(pokemonInfo.toPokemonEntity())
+                    }
                 }
             }.onFailure {
                 Timber.tag(TAG).w("Problems while retrieving Pokemon list from WebService. Error message: $it")
             }
-
-            kotlin.runCatching {
-                Timber.tag(TAG).d("Trying to store the Pokemon list into Database.")
-                dao.insertPokemonList(pokemonList.toPokemonEntityList())
-            }.onSuccess {
-                Timber.tag(TAG).d("Pokemon list inserted into Database.")
-            }.onFailure {
-                Timber.tag(TAG).d("Failed inserting the Pokemon list into Database.")
-            }
         }
-
-        Timber.tag(TAG).d("Pokemon list: $pokemonList")
-
         return pokemonList
     }
 
