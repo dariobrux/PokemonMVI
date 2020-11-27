@@ -10,8 +10,8 @@ class MainViewModel(private val pokemonList: GetPokemonList) : AndroidDataFlow()
     fun getPokemonList(offset: Int, limit: Int) = action(
         onAction = {
             sendEvent { UIEvent.Loading }
-            pokemonList(offset, limit)
-            setState { UIState.Success }
+            val mainState = MainState(pokemonList(offset, limit))
+            setState { mainState }
         },
         onError = { error, _ -> setState { UIState.Failed("getPokemon failed", error) } })
 }

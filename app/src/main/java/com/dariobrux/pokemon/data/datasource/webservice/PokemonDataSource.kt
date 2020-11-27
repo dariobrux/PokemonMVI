@@ -1,28 +1,50 @@
 package com.dariobrux.pokemon.data.datasource.webservice
 
-import com.dariobrux.pokemon.domain.model.root.RootData
-import com.dariobrux.pokemon.domain.model.info.PokemonInfo
-import kotlinx.coroutines.Deferred
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.http.Url
+import androidx.paging.PagingSource
+import com.dariobrux.pokemon.common.getLimitParameter
+import com.dariobrux.pokemon.common.getOffsetParameter
+import com.dariobrux.pokemon.common.toPokemonEntity
+import com.dariobrux.pokemon.common.toPokemonEntityList
+import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import timber.log.Timber
 
-/**
- * Weather datasource - Retrofit tagged
- */
-interface PokemonDataSource {
+class PokemonDataSource(private val api: PokemonApi) : PagingSource<Int, PokemonEntity>() {
 
-    /**
-     * Get the [RootData] with the pokemon list.
-     * @param offset it will be retrieved a list starting from this value
-     * @param limit maximum number of items to retrieve.
-     * @return the [RootData] mapped into a [Response] object.
-     */
-    @GET("api/v2/pokemon")
-    fun getPokemonListAsync(@Query("offset") offset: Int, @Query("limit") limit: Int): Deferred<RootData>
+    @ExperimentalCoroutinesApi
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonEntity> {
+        return try {
+            val nextPageNumber = params.key ?: 0
+            val rootData = api.getPokemonListAsync(nextPageNumber).await()
 
-    @GET
-    fun getPokemonInfoAsync(@Url url: String): Deferred<PokemonInfo>
+            val pokemonList = rootData.results!!.toPokemonEntityList().toMutableList()
+            val previous = rootData.previous.getOffsetParameter()
+            val next = rootData.next.getOffsetParameter()
+            val limit = rootData.previous.getLimitParameter()
 
+            Timber.tag(TAG).d("Retrieve Pokemon from offset $next to ${(next ?: 0) + (limit ?: 0)}")
+
+            rootData.results?.forEachIndexed { index, value ->
+                value.url?.run {
+                    api.getPokemonInfoAsync(this)
+                }?.await()?.let {
+                    pokemonList[index] = it.toPokemonEntity()
+                }
+            }
+
+            LoadResult.Page(
+                data = pokemonList,
+                prevKey = previous,
+                nextKey = next
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+
+    companion object {
+        private const val TAG = "PokemonDataSource"
+    }
 }

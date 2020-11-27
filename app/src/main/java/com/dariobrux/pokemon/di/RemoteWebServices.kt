@@ -1,6 +1,6 @@
 package com.dariobrux.pokemon.di
 
-import com.dariobrux.pokemon.data.datasource.webservice.PokemonDataSource
+import com.dariobrux.pokemon.data.datasource.webservice.PokemonApi
 import com.dariobrux.pokemon.data.datasource.webservice.mock.MockInterceptor
 import com.dariobrux.pokemon.di.Properties.SERVER_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -17,7 +17,7 @@ val remoteWebServiceModule = module {
     // provided web components
     single { createOkHttpClient() }
     // Fill property
-    single { createWebService<PokemonDataSource>(get(), getProperty(SERVER_URL)) }
+    single { createWebService<PokemonApi>(get(), getProperty(SERVER_URL)) }
 }
 
 object Properties {

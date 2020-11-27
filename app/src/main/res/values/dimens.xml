@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="regular_card_height">200dp</dimen>
+    <dimen name="regular_corner_radius">16dp</dimen>
+    <dimen name="regular_padding">20dp</dimen>
+</resources>

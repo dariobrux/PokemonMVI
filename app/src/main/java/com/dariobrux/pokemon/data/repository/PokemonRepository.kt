@@ -1,15 +1,25 @@
 package com.dariobrux.pokemon.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.dariobrux.pokemon.common.toPokemonEntity
 import com.dariobrux.pokemon.data.datasource.database.PokemonDAO
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
+import com.dariobrux.pokemon.data.datasource.webservice.PokemonApi
 import com.dariobrux.pokemon.data.datasource.webservice.PokemonDataSource
 import com.dariobrux.pokemon.domain.model.Pokemon
+import com.dariobrux.pokemon.domain.model.root.Results
+import com.dariobrux.pokemon.domain.model.root.RootData
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
-class PokemonRepository(private val dataSource: PokemonDataSource, private val dao: PokemonDAO) : IPokemonRepository {
+class PokemonRepository(private val api: PokemonApi, private val dao: PokemonDAO) : IPokemonRepository {
 
-    override suspend fun getPokemonList(offset: Int, limit: Int): List<PokemonEntity> {
+    var pagerPokemon: Pager<Int, PokemonEntity>? = null
+
+    override suspend fun getPokemonList(offset: Int, limit: Int): Flow<PagingData<PokemonEntity>>? {
 
         var pokemonList: List<PokemonEntity> = emptyList()
 
@@ -26,19 +36,25 @@ class PokemonRepository(private val dataSource: PokemonDataSource, private val d
 
         if (pokemonList.isEmpty()) {
             kotlin.runCatching {
-                dataSource.getPokemonListAsync(offset, limit).await().results?.let {
-                    Timber.tag(TAG).d("Pokemon retrieved from WebService.")
-                    it.forEach { pokemon ->
-                        Timber.tag(TAG).d("Storing ${pokemon.name}...")
-                        val pokemonInfo = dataSource.getPokemonInfoAsync(pokemon.url ?: "").await()
-                        dao.insertPokemon(pokemonInfo.toPokemonEntity())
-                    }
+
+
+                pagerPokemon = Pager(PagingConfig(pageSize = 10)) {
+                    PokemonDataSource(api)
                 }
+
+//                api.getPokemonListAsync(offset, limit).await().results?.let {
+//                    Timber.tag(TAG).d("Pokemon retrieved from WebService.")
+//                    it.forEach { pokemon ->
+//                        Timber.tag(TAG).d("Storing ${pokemon.name}...")
+//                        val pokemonInfo = api.getPokemonInfoAsync(pokemon.url ?: "").await()
+//                        dao.insertPokemon(pokemonInfo.toPokemonEntity())
+//                    }
+//                }
             }.onFailure {
                 Timber.tag(TAG).w("Problems while retrieving Pokemon list from WebService. Error message: $it")
             }
         }
-        return pokemonList
+        return pagerPokemon?.flow
     }
 
     override suspend fun getPokemonDetail(id: String): Pokemon {
