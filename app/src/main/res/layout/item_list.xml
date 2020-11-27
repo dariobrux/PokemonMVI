@@ -26,6 +26,7 @@
             android:id="@+id/txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingStart="@dimen/regular_padding"
             android:paddingEnd="@dimen/regular_padding"
             android:paddingBottom="@dimen/regular_padding"
