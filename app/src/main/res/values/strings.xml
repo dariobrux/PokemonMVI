@@ -2,4 +2,6 @@
     <string name="app_name">Pokemon</string>
     <string name="pokeball">Pokeball</string>
     <string name="image_pokemon">Image Pokemon</string>
+    <string name="base_stats">Base Stats</string>
+    <string name="format_number">#%d</string>
 </resources>

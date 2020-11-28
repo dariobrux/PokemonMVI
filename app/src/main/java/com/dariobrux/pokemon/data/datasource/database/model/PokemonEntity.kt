@@ -22,6 +22,6 @@ data class PokemonEntity(
     var stats: List<StatsEntity> = listOf(),
 
     @NonNull
-    var id: Int = 0
+    var id: Int = 0,
 
 ) : Serializable

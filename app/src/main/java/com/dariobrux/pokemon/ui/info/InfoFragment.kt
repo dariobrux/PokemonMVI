@@ -13,6 +13,7 @@ import com.dariobrux.pokemon.common.loadImage
 import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
+import com.dariobrux.pokemon.ui.util.StatsSpaceItemDecoration
 import com.dariobrux.pokemon.ui.util.TypeSpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -37,14 +38,27 @@ class InfoFragment : Fragment() {
 
         with(binding) {
             card.transitionName = pokemon.name
+
             img.loadImage(requireContext(), pokemon.image) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
             }
+
+            txtNumber.text = getString(R.string.format_number, pokemon.id)
+
             txt.text = pokemon.name.capitalize(Locale.getDefault())
-            recyclerTypes.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            recyclerTypes.addItemDecoration(TypeSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
-            recyclerTypes.adapter = TypeAdapter(requireContext(), pokemon.types)
+
+            recyclerTypes.let {
+                it.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                it.addItemDecoration(TypeSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+                it.adapter = TypeAdapter(requireContext(), pokemon.types)
+            }
+
+            recyclerStats.let {
+                it.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                it.addItemDecoration(StatsSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+                it.adapter = StatsAdapter(requireContext(), pokemon.stats)
+            }
         }
 
         sharedElementEnterTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)
