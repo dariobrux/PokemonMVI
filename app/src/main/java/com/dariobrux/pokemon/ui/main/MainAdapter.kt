@@ -1,22 +1,22 @@
 package com.dariobrux.pokemon.ui.main
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.dariobrux.pokemon.R
-import com.dariobrux.pokemon.common.animateCardBackgroundColor
-import com.dariobrux.pokemon.common.getColorCompat
 import com.dariobrux.pokemon.common.loadImage
+import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.ItemListBinding
 import java.util.*
 
-class PokemonAdapter(private val context: Context) : PagingDataAdapter<PokemonEntity, PokemonAdapter.PokemonViewHolder>(PokemonComparator) {
+class MainAdapter(private val context: Context, private val listener: OnItemSelectedListener?) : PagingDataAdapter<PokemonEntity, MainAdapter.PokemonViewHolder>(PokemonComparator) {
+
+    interface OnItemSelectedListener {
+        fun onItemSelected(pokemonEntity: PokemonEntity)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         return PokemonViewHolder(ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -31,7 +31,10 @@ class PokemonAdapter(private val context: Context) : PagingDataAdapter<PokemonEn
         fun bind(item: PokemonEntity) = with(binding) {
             txt.text = item.name.capitalize(Locale.getDefault())
             img.loadImage(context, item.image) {
-                card.setCardBackgroundColor(it)
+                card.setCardBackgroundColor(it.withAlpha(220))
+            }
+            card.setOnClickListener {
+                listener?.onItemSelected(item)
             }
         }
     }

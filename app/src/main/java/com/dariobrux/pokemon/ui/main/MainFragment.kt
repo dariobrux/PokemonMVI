@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dariobrux.pokemon.R
+import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.GridSpaceItemDecoration
 import io.uniflow.androidx.flow.onStates
@@ -18,14 +19,13 @@ import io.uniflow.core.flow.data.UIError
 import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModel()
 
-    private lateinit var pokemonAdapter: PokemonAdapter
+    private lateinit var mainAdapter: MainAdapter
 
     // Binding
     private var _binding: FragmentMainBinding? = null
@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        pokemonAdapter = PokemonAdapter(context)
+        mainAdapter = MainAdapter(context, this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -56,7 +56,7 @@ class MainFragment : Fragment() {
         binding.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
         binding.recycler.setHasFixedSize(true)
         binding.recycler.addItemDecoration(GridSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
-        binding.recycler.adapter = pokemonAdapter
+        binding.recycler.adapter = mainAdapter
 
 //        lifecycleScope.launch {
 //            viewModel.getPokemonList(0, 0)
@@ -82,14 +82,18 @@ class MainFragment : Fragment() {
     }
 
     private fun showIsLoaded(state: MainState) {
-        true
         state.pagingData?.let {
             lifecycleScope.launch {
                 it.collectLatest {
-                    pokemonAdapter.submitData(it)
+                    mainAdapter.submitData(it)
                 }
             }
         }
-//        NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_mainFragment)
+    }
+
+    override fun onItemSelected(pokemonEntity: PokemonEntity) {
+        NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_infoFragment, Bundle().apply {
+            putSerializable("pokemon", pokemonEntity)
+        })
     }
 }
