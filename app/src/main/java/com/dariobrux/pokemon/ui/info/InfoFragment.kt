@@ -12,6 +12,7 @@ import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class InfoFragment : Fragment() {
 
@@ -33,6 +34,7 @@ class InfoFragment : Fragment() {
 
         with(binding) {
             card.transitionName = pokemon.name
+            txt.text = pokemon.name.capitalize(Locale.getDefault())
             img.loadImage(requireContext(), pokemon.image) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
