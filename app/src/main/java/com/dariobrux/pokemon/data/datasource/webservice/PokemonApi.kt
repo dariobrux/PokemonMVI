@@ -11,7 +11,7 @@ import retrofit2.http.Url
 /**
  * Weather datasource - Retrofit tagged
  */
-interface PokemonDataSource {
+interface PokemonApi {
 
     /**
      * Get the [RootData] with the pokemon list.
@@ -20,7 +20,7 @@ interface PokemonDataSource {
      * @return the [RootData] mapped into a [Response] object.
      */
     @GET("api/v2/pokemon")
-    fun getPokemonListAsync(@Query("offset") offset: Int, @Query("limit") limit: Int): Deferred<RootData>
+    fun getPokemonListAsync(@Query("offset") offset: Int, @Query("limit") limit: Int = 20): Deferred<RootData>
 
     @GET
     fun getPokemonInfoAsync(@Url url: String): Deferred<PokemonInfo>

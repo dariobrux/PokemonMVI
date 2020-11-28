@@ -30,27 +30,27 @@ class SplashFragment : Fragment() {
 
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.imgSplash.scaleX = 0f
-        binding.imgSplash.scaleY = 0f
-        binding.imgSplash.alpha = 0.3f
-        binding.imgSplash.animate().scaleX(0.5f).scaleY(0.5f).alpha(0.75f).setDuration(1000).setInterpolator(AnticipateOvershootInterpolator()).withEndAction {
-            binding.imgSplash.animate().rotation(360f).scaleX(1f).scaleY(1f).alpha(1f).setDuration(2000).setInterpolator(BounceInterpolator()).start()
-        }.start()
+//        binding.imgSplash.scaleX = 0f
+//        binding.imgSplash.scaleY = 0f
+//        binding.imgSplash.alpha = 0.3f
+//        binding.imgSplash.animate().scaleX(0.5f).scaleY(0.5f).alpha(0.75f).setDuration(1000).setInterpolator(AnticipateOvershootInterpolator()).withEndAction {
+//            binding.imgSplash.animate().rotation(360f).scaleX(1f).scaleY(1f).alpha(1f).setDuration(2000).setInterpolator(BounceInterpolator()).start()
+//        }.start()
     }
 
     override fun onResume() {
         super.onResume()
 
-        activityScope.launch {
-            delay(3500)
+//        activityScope.launch {
+//            delay(1000)
             NavHostFragment.findNavController(this@SplashFragment).navigate(R.id.action_splashFragment_to_mainFragment)
-        }
+//        }
     }
 
     override fun onPause() {

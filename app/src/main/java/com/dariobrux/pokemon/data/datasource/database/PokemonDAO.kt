@@ -23,7 +23,7 @@ interface PokemonDAO {
      * @return the list with all pokemon.
      */
     @Query("Select * from pokemon limit :limit offset :offset")
-    fun getPokemonList(offset: Int, limit: Int): List<PokemonEntity>?
+    suspend fun getPokemonList(offset: Int, limit: Int = 20): List<PokemonEntity>?
 
 //    /**
 //     * Get the info of a specific pokemon.
@@ -39,10 +39,10 @@ interface PokemonDAO {
      * Use the replacing strategy to override each existing item.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPokemonList(pokemonList: List<PokemonEntity>)
+    suspend fun insertPokemonList(pokemonList: List<PokemonEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPokemon(pokemon: PokemonEntity)
+    suspend fun insertPokemon(pokemon: PokemonEntity)
 
 //    /**
 //     * Add a pokemon in the database.
