@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.transition.TransitionInflater
 import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.loadImage
 import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
-import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InfoFragment : Fragment() {
@@ -32,10 +32,16 @@ class InfoFragment : Fragment() {
         val pokemon = arguments?.getSerializable("pokemon") as? PokemonEntity ?: return
 
         with(binding) {
+            card.transitionName = pokemon.name
             img.loadImage(requireContext(), pokemon.image) {
-                infoContainerRoot.setBackgroundColor(it.withAlpha(80))
+                infoContainerRoot.setBackgroundColor(it)
+                card.setCardBackgroundColor(it)
             }
         }
+
+        sharedElementEnterTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)
+        sharedElementReturnTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)
+
     }
 
     override fun onDestroyView() {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.GridSpaceItemDecoration
+import com.google.android.material.card.MaterialCardView
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIError
 import io.uniflow.core.flow.data.UIState
@@ -91,9 +93,14 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         }
     }
 
-    override fun onItemSelected(pokemonEntity: PokemonEntity) {
-        NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_infoFragment, Bundle().apply {
-            putSerializable("pokemon", pokemonEntity)
-        })
+    override fun onItemSelected(pokemonEntity: PokemonEntity, view: View) {
+        val extras = FragmentNavigatorExtras((view as MaterialCardView) to pokemonEntity.name)
+        NavHostFragment.findNavController(this).navigate(
+            R.id.action_mainFragment_to_infoFragment, Bundle().apply {
+                putSerializable("pokemon", pokemonEntity)
+            },
+            null,
+            extras
+        )
     }
 }

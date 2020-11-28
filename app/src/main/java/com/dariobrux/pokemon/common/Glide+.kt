@@ -13,7 +13,7 @@ import com.bumptech.glide.request.target.Target
 import com.dariobrux.pokemon.R
 
 fun ImageView.loadImage(context: Context, url: String, onDominantColor: (Int) -> Unit) {
-    Glide.with(context).asBitmap().load(url).diskCacheStrategy(DiskCacheStrategy.ALL).listener(object : RequestListener<Bitmap> {
+    Glide.with(context).asBitmap().load(url).diskCacheStrategy(DiskCacheStrategy.DATA).listener(object : RequestListener<Bitmap> {
         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
             return true
         }

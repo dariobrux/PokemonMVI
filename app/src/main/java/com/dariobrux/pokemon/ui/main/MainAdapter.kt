@@ -2,6 +2,7 @@ package com.dariobrux.pokemon.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -15,7 +16,7 @@ import java.util.*
 class MainAdapter(private val context: Context, private val listener: OnItemSelectedListener?) : PagingDataAdapter<PokemonEntity, MainAdapter.PokemonViewHolder>(PokemonComparator) {
 
     interface OnItemSelectedListener {
-        fun onItemSelected(pokemonEntity: PokemonEntity)
+        fun onItemSelected(pokemonEntity: PokemonEntity, view: View)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
@@ -29,12 +30,13 @@ class MainAdapter(private val context: Context, private val listener: OnItemSele
 
     inner class PokemonViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PokemonEntity) = with(binding) {
+            card.transitionName = item.name
             txt.text = item.name.capitalize(Locale.getDefault())
             img.loadImage(context, item.image) {
                 card.setCardBackgroundColor(it.withAlpha(220))
             }
             card.setOnClickListener {
-                listener?.onItemSelected(item)
+                listener?.onItemSelected(item, it)
             }
         }
     }
