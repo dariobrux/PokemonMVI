@@ -27,22 +27,21 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModel()
 
-    private lateinit var mainAdapter: MainAdapter
+//    private lateinit var mainAdapter: MainAdapter
 
     // Binding
-    private var _binding: FragmentMainBinding? = null
+    private var binding: FragmentMainBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainAdapter = MainAdapter(context, this)
+//        mainAdapter = MainAdapter(context, this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,23 +54,19 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         }
         viewModel.getPokemonList(0, 1117)
 
-        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-        binding.recycler.setHasFixedSize(true)
-        binding.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
-        binding.recycler.adapter = mainAdapter
-
-//        lifecycleScope.launch {
-//            viewModel.getPokemonList(0, 0)
-//                .collectLatest { pagedData ->
-//                pokemonAdapter.submitData(pagedData)
-//            }
-//        }
+        binding?.let {
+            it.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+            it.recycler.setHasFixedSize(true)
+            it.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+            it.recycler.adapter = MainAdapter(requireContext(), this)
+        }
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding?.recycler?.adapter = null
+        binding = null
     }
 
     private fun showError(error: UIError?) {
@@ -87,7 +82,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         state.pagingData?.let {
             lifecycleScope.launch {
                 it.collectLatest {
-                    mainAdapter.submitData(it)
+                    (binding?.recycler?.adapter as? MainAdapter)?.submitData(it)
                 }
             }
         }

@@ -7,4 +7,5 @@
     <dimen name="regular_type_size">16dp</dimen>
     <dimen name="regular_progress_height">24dp</dimen>
     <dimen name="medium_padding">40dp</dimen>
+    <dimen name="small_padding">10dp</dimen>
 </resources>
