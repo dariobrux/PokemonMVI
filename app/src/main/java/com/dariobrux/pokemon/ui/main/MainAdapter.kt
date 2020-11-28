@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dariobrux.pokemon.common.loadImage
 import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
-import com.dariobrux.pokemon.databinding.ItemListBinding
+import com.dariobrux.pokemon.databinding.PokemonItemListBinding
 import java.util.*
 
 class MainAdapter(private val context: Context, private val listener: OnItemSelectedListener?) : PagingDataAdapter<PokemonEntity, MainAdapter.PokemonViewHolder>(PokemonComparator) {
@@ -20,7 +20,7 @@ class MainAdapter(private val context: Context, private val listener: OnItemSele
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        return PokemonViewHolder(ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return PokemonViewHolder(PokemonItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
@@ -28,7 +28,7 @@ class MainAdapter(private val context: Context, private val listener: OnItemSele
         item?.let { holder.bind(it) }
     }
 
-    inner class PokemonViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PokemonViewHolder(private val binding: PokemonItemListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PokemonEntity) = with(binding) {
             card.transitionName = item.name
             txt.text = item.name.capitalize(Locale.getDefault())

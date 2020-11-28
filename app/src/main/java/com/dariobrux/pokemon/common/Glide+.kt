@@ -27,3 +27,8 @@ fun ImageView.loadImage(context: Context, url: String, onDominantColor: (Int) ->
         }
     }).into(this)
 }
+
+fun ImageView.loadImage(context: Context, name: String) {
+    val res = context.resources.getIdentifier(name, "drawable", context.packageName)
+    Glide.with(context).load(res).into(this)
+}

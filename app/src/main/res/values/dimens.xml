@@ -3,4 +3,6 @@
     <dimen name="regular_card_height">200dp</dimen>
     <dimen name="regular_corner_radius">16dp</dimen>
     <dimen name="regular_padding">20dp</dimen>
+    <dimen name="regular_type_circle_size">36dp</dimen>
+    <dimen name="regular_type_size">16dp</dimen>
 </resources>

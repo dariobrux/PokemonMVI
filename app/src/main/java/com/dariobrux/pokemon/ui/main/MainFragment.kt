@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
-import com.dariobrux.pokemon.ui.util.GridSpaceItemDecoration
+import com.dariobrux.pokemon.ui.util.PokemonSpaceItemDecoration
 import com.google.android.material.card.MaterialCardView
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIError
@@ -57,7 +57,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
         binding.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
         binding.recycler.setHasFixedSize(true)
-        binding.recycler.addItemDecoration(GridSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+        binding.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
         binding.recycler.adapter = mainAdapter
 
 //        lifecycleScope.launch {

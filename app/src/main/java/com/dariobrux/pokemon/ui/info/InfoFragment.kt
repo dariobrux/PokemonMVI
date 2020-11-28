@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.loadImage
 import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
+import com.dariobrux.pokemon.ui.util.TypeSpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -34,11 +37,14 @@ class InfoFragment : Fragment() {
 
         with(binding) {
             card.transitionName = pokemon.name
-            txt.text = pokemon.name.capitalize(Locale.getDefault())
             img.loadImage(requireContext(), pokemon.image) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
             }
+            txt.text = pokemon.name.capitalize(Locale.getDefault())
+            recyclerTypes.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            recyclerTypes.addItemDecoration(TypeSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+            recyclerTypes.adapter = TypeAdapter(requireContext(), pokemon.types)
         }
 
         sharedElementEnterTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)

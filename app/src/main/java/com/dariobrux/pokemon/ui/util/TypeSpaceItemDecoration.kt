@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
  *
  * This class is the ItemDecoration useful for the RecyclerView in grid visualization.
  */
-class GridSpaceItemDecoration(private val space: Int) : ItemDecoration() {
+class TypeSpaceItemDecoration(private val space: Int) : ItemDecoration() {
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         parent.adapter?.let {
             val position = parent.getChildAdapterPosition(view)
@@ -23,12 +23,6 @@ class GridSpaceItemDecoration(private val space: Int) : ItemDecoration() {
                 outRect.left = space
                 outRect.right = space / 2
             }
-
-            if (position == 0 || position == 1) {
-                outRect.top = space
-            }
-
-            outRect.bottom = space
         }
     }
 }
