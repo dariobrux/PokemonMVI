@@ -27,7 +27,7 @@
     <com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar
         android:id="@+id/progress"
         android:layout_width="0dp"
-        android:layout_height="@dimen/regular_progress_height"
+        android:layout_height="@dimen/regular_stats_bar_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"

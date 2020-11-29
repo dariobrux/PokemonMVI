@@ -1,5 +1,6 @@
 package com.dariobrux.pokemon.data.repository
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -13,40 +14,18 @@ class PokemonRepository(private val api: PokemonApi, private val dao: PokemonDAO
 
     var pagerPokemon: Pager<Int, PokemonEntity>? = null
 
+    override var state: MutableLiveData<State> = MutableLiveData(State.DEFAULT)
+
+    enum class State {
+        DEFAULT,
+        LOADING,
+        LOADED
+    }
+
     override suspend fun getPokemonList(offset: Int, limit: Int): Flow<PagingData<PokemonEntity>>? {
 
         pagerPokemon = Pager(PagingConfig(pageSize = 10)) {
-
-//            var pokemonList: List<PokemonEntity> = emptyList()
-
-//            kotlin.runCatching {
-//                dao.getPokemonList(offset, limit)
-//            }.onSuccess {
-//                if (!it.isNullOrEmpty()) {
-//                    Timber.tag(TAG).d("Pokemon retrieved from Database.")
-//                    pokemonList = it
-//                }
-//            }.onFailure {
-//                Timber.tag(TAG).w("Problems while retrieving Pokemon list from Database. Error message: $it")
-//            }
-
-//            if (pokemonList.isEmpty()) {
-//                kotlin.runCatching {
-
-//                api.getPokemonListAsync(offset, limit).await().results?.let {
-//                    Timber.tag(TAG).d("Pokemon retrieved from WebService.")
-//                    it.forEach { pokemon ->
-//                        Timber.tag(TAG).d("Storing ${pokemon.name}...")
-//                        val pokemonInfo = api.getPokemonInfoAsync(pokemon.url ?: "").await()
-//                        dao.insertPokemon(pokemonInfo.toPokemonEntity())
-//                    }
-//                }
-//                }.onFailure {
-//                    Timber.tag(TAG).w("Problems while retrieving Pokemon list from WebService. Error message: $it")
-//                }
-//            }
-
-            PokemonDataSource(api, dao)
+            PokemonDataSource(api, dao, state)
         }
         return pagerPokemon?.flow
     }

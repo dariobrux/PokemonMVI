@@ -5,4 +5,5 @@
     <string name="base_stats">Base Stats</string>
     <string name="format_number">#%d</string>
     <string name="format_exp">(EXP %d)</string>
+    <string name="pikachu">Pikachu</string>
 </resources>

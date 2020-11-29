@@ -25,11 +25,51 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_alpha_50"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="@dimen/regular_progress_height"
+            android:layout_height="@dimen/regular_progress_height"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminateTint="@color/red_400"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/pikachu"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/pikachu"
+            android:padding="@dimen/regular_padding"
+            android:scaleType="centerInside"
+            android:src="@drawable/pikachu"
+            app:layout_constraintBottom_toBottomOf="@id/loading"
+            app:layout_constraintEnd_toEndOf="@id/loading"
+            app:layout_constraintStart_toStartOf="@id/loading"
+            app:layout_constraintTop_toTopOf="@id/loading" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

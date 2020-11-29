@@ -7,6 +7,8 @@ import io.uniflow.core.flow.data.UIState
 
 class MainViewModel(private val pokemonList: GetPokemonList) : AndroidDataFlow() {
 
+    var state = pokemonList.state
+
     fun getPokemonList(offset: Int, limit: Int) = action(
         onAction = {
             sendEvent { UIEvent.Loading }

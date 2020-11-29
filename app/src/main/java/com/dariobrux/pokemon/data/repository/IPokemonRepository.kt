@@ -1,5 +1,6 @@
 package com.dariobrux.pokemon.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
@@ -13,4 +14,6 @@ interface IPokemonRepository {
     suspend fun getPokemonList(offset: Int, limit: Int): Flow<PagingData<PokemonEntity>>?
 
     suspend fun getPokemonDetail(id: String): Pokemon
+
+    val state: LiveData<PokemonRepository.State>
 }

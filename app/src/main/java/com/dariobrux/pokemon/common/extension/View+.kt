@@ -1,6 +1,7 @@
 package com.dariobrux.pokemon.common.extension
 
 import android.animation.ValueAnimator
+import android.view.View
 import androidx.cardview.widget.CardView
 
 /**
@@ -17,4 +18,12 @@ fun CardView.animateCardBackgroundColor(startColor: Int, toColor: Int) {
         this.setCardBackgroundColor(color)
     }
     anim.start()
+}
+
+fun View.toVisible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.toGone() {
+    this.visibility = View.GONE
 }

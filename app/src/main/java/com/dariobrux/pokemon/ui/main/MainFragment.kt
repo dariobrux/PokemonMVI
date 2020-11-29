@@ -12,7 +12,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dariobrux.pokemon.R
+import com.dariobrux.pokemon.common.extension.toGone
+import com.dariobrux.pokemon.common.extension.toVisible
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
+import com.dariobrux.pokemon.data.repository.PokemonRepository
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.PokemonSpaceItemDecoration
 import com.google.android.material.card.MaterialCardView
@@ -22,6 +25,7 @@ import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
@@ -29,7 +33,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private var binding: FragmentMainBinding? = null
 
-    private var mainAdapter : MainAdapter? = null
+    private var mainAdapter: MainAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,7 +48,6 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         onStates(viewModel) { state ->
             when (state) {
-                is UIState.Loading -> showIsLoading()
                 is MainState -> showIsLoaded(state)
                 is UIState.Failed -> showError(state.error)
             }
@@ -57,6 +60,40 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
             it.recycler.adapter = mainAdapter
         }
 
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                PokemonRepository.State.LOADING -> {
+                    showLoading()
+                }
+                else -> {
+                    hideLoading()
+                }
+            }
+        }
+    }
+
+    private fun showLoading() {
+        binding?.let { bind ->
+            bind.pikachu.toVisible()
+            rotatePikachu()
+
+            bind.loading.toVisible()
+            bind.mask.toVisible()
+        }
+    }
+
+    private fun rotatePikachu() {
+        binding?.pikachu?.animate()?.rotationYBy(180f)?.setDuration(0)?.setStartDelay(500)?.withEndAction {
+            rotatePikachu()
+        }?.start()
+    }
+
+    private fun hideLoading() {
+        binding?.let { bind ->
+            bind.pikachu.toGone()
+            bind.loading.toGone()
+            bind.mask.toGone()
+        }
     }
 
     override fun onDestroyView() {
@@ -70,8 +107,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
     }
 
     private fun showIsLoading() {
-//        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.infinite_blinking_animation)
-//        binding.imgSplash.startAnimation(animation)
+
     }
 
     private fun showIsLoaded(state: MainState) {
