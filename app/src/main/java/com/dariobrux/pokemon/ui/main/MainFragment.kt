@@ -27,16 +27,18 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModel()
 
-//    private lateinit var mainAdapter: MainAdapter
-
-    // Binding
     private var binding: FragmentMainBinding? = null
 
-    // This property is only valid between onCreateView and onDestroyView.
+    private var mainAdapter : MainAdapter? = null
+
+//    private var totalScroll = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-//        mainAdapter = MainAdapter(context, this)
+        retainInstance = true
+        mainAdapter = MainAdapter(requireContext(), this)//.apply {
+//            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -56,9 +58,17 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
         binding?.let {
             it.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-            it.recycler.setHasFixedSize(true)
             it.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
-            it.recycler.adapter = MainAdapter(requireContext(), this)
+            it.recycler.adapter = mainAdapter
+//            it.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//                    totalScroll += dy
+//                }
+//            })
+//            it.recycler.postDelayed( {
+//                it.recycler.layoutManager!!.scrollToPosition(45)
+//            }, 2000)
         }
 
     }
@@ -82,7 +92,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         state.pagingData?.let {
             lifecycleScope.launch {
                 it.collectLatest {
-                    (binding?.recycler?.adapter as? MainAdapter)?.submitData(it)
+                    mainAdapter?.submitData(it)
                 }
             }
         }

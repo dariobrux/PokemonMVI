@@ -19,8 +19,15 @@
             android:id="@+id/action_mainFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
     </fragment>
-    <fragment
+
+    <dialog
         android:id="@+id/infoFragment"
         android:name="com.dariobrux.pokemon.ui.info.InfoFragment"
-        android:label="InfoFragment" />
+        android:label="InfoFragment" >
+
+    </dialog>
+<!--    <fragment-->
+<!--        android:id="@+id/infoFragment"-->
+<!--        android:name="com.dariobrux.pokemon.ui.info.InfoFragment"-->
+<!--        android:label="InfoFragment" />-->
 </navigation>

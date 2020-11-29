@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,7 @@ import com.dariobrux.pokemon.ui.util.TypeSpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class InfoFragment : Fragment() {
+class InfoFragment : DialogFragment() {
 
     private val viewModel: InfoViewModel by viewModel()
 
@@ -27,6 +28,11 @@ class InfoFragment : Fragment() {
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
@@ -42,6 +48,7 @@ class InfoFragment : Fragment() {
             img.loadImage(requireContext(), pokemon.image) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
+                toolbar.setBackgroundColor(it)
             }
 
             txtNumber.text = getString(R.string.format_number, pokemon.id)
