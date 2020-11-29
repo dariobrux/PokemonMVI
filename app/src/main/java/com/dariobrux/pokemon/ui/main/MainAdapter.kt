@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.dariobrux.pokemon.common.loadImage
-import com.dariobrux.pokemon.common.withAlpha
+import com.dariobrux.pokemon.common.extension.loadImage
+import com.dariobrux.pokemon.common.extension.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.PokemonItemListBinding
 import java.util.*

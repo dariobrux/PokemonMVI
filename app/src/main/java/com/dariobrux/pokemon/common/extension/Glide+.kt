@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.common
+package com.dariobrux.pokemon.common.extension
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,7 +11,22 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.dariobrux.pokemon.R
+import com.dariobrux.pokemon.common.extension.getDominantColor
 
+/**
+ *
+ * Created by Dario Bruzzese on 29/11/2020.
+ *
+ * This file contains all the extended methods for Glide.
+ *
+ */
+
+/**
+ * Load an image url with Glide into the ImageView.
+ * @param context the [Context] of the application.
+ * @param url the image url.
+ * @param onDominantColor an asynchronous callback that returns the dominant color of the image.
+ */
 fun ImageView.loadImage(context: Context, url: String, onDominantColor: (Int) -> Unit) {
     Glide.with(context).asBitmap().load(url).diskCacheStrategy(DiskCacheStrategy.DATA).listener(object : RequestListener<Bitmap> {
         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
@@ -28,6 +43,11 @@ fun ImageView.loadImage(context: Context, url: String, onDominantColor: (Int) ->
     }).into(this)
 }
 
+/**
+ * From an image name converting into a drawable resource, load the drawable with Glide into the ImageView.
+ * @param context the [Context] of the application.
+ * @param name the image name into drawable folder.
+ */
 fun ImageView.loadImage(context: Context, name: String) {
     val res = context.resources.getIdentifier(name, "drawable", context.packageName)
     Glide.with(context).load(res).into(this)

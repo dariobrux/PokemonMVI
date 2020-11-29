@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.dariobrux.pokemon.common.TypeMapper
-import com.dariobrux.pokemon.common.loadImage
+import com.dariobrux.pokemon.common.mapper.TypeMapper
+import com.dariobrux.pokemon.common.extension.loadImage
 import com.dariobrux.pokemon.data.datasource.database.model.TypeEntity
 import com.dariobrux.pokemon.databinding.TypeItemListBinding
 import java.util.*

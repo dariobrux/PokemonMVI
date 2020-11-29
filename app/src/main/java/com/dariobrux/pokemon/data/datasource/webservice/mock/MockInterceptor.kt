@@ -1,6 +1,6 @@
 package com.dariobrux.pokemon.data.datasource.webservice.mock
 
-import com.dariobrux.pokemon.common.JsonReader
+import com.dariobrux.pokemon.common.file.JsonReader
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody

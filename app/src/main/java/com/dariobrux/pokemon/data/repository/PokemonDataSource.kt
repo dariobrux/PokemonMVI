@@ -1,10 +1,10 @@
 package com.dariobrux.pokemon.data.repository
 
 import androidx.paging.PagingSource
-import com.dariobrux.pokemon.common.getLimitParameter
-import com.dariobrux.pokemon.common.getOffsetParameter
-import com.dariobrux.pokemon.common.toPokemonEntity
-import com.dariobrux.pokemon.common.toPokemonEntityList
+import com.dariobrux.pokemon.common.extension.getLimitParameter
+import com.dariobrux.pokemon.common.extension.getOffsetParameter
+import com.dariobrux.pokemon.common.extension.toPokemonEntity
+import com.dariobrux.pokemon.common.extension.toPokemonEntityList
 import com.dariobrux.pokemon.data.datasource.database.PokemonDAO
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.data.datasource.webservice.PokemonApi

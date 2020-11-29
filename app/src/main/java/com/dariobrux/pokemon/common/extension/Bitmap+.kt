@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.common
+package com.dariobrux.pokemon.common.extension
 
 import android.graphics.Bitmap
 import androidx.palette.graphics.Palette

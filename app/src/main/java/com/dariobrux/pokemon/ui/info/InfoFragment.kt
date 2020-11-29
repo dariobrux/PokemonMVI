@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.dariobrux.pokemon.R
-import com.dariobrux.pokemon.common.loadImage
+import com.dariobrux.pokemon.common.extension.loadImage
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
 import com.dariobrux.pokemon.ui.util.StatsSpaceItemDecoration

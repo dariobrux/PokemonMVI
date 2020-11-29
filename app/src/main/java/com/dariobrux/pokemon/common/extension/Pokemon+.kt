@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.common
+package com.dariobrux.pokemon.common.extension
 
 import com.dariobrux.pokemon.data.datasource.database.model.ImageEntity
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
@@ -10,6 +10,18 @@ import com.dariobrux.pokemon.domain.model.info.Stats
 import com.dariobrux.pokemon.domain.model.info.Types
 import com.dariobrux.pokemon.domain.model.root.Results
 
+/**
+ *
+ * Created by Dario Bruzzese on 25/11/2020.
+ *
+ * This file contains all the extended methods for Pokemon related objects.
+ *
+ */
+
+/**
+ * Convert a [PokemonInfo] object to a [PokemonEntity] object.
+ * @return the [PokemonEntity] object.
+ */
 fun PokemonInfo.toPokemonEntity(): PokemonEntity {
     return PokemonEntity(
         name = this.name ?: "",
@@ -21,13 +33,21 @@ fun PokemonInfo.toPokemonEntity(): PokemonEntity {
     )
 }
 
+/**
+ * Convert a list of [Results] object to a list of [PokemonEntity] object.
+ * @return the list of [PokemonEntity] object.
+ */
 fun List<Results>.toPokemonEntityList(): List<PokemonEntity> {
     return this.map {
         PokemonEntity(name = it.name ?: "")
     }
 }
 
-private fun Sprite?.toImageEntityList(): List<ImageEntity> {
+/**
+ * Convert a [Sprite] to a ist of [ImageEntity] object.
+ * @return the list of [ImageEntity] object.
+ */
+fun Sprite?.toImageEntityList(): List<ImageEntity> {
     return listOfNotNull(
         this?.other?.officialArtwork?.frontDefault,
         this?.other?.dreamWorld?.frontDefault,
@@ -45,13 +65,21 @@ private fun Sprite?.toImageEntityList(): List<ImageEntity> {
     }
 }
 
-private fun List<Types>?.toTypeEntityList(): List<TypeEntity> {
+/**
+ * Convert a list of [Types] object to a ist of [TypeEntity] object.
+ * @return the list of [TypeEntity] object.
+ */
+fun List<Types>?.toTypeEntityList(): List<TypeEntity> {
     return this?.map {
         TypeEntity(name = it.type?.name ?: "")
     } ?: emptyList()
 }
 
-private fun List<Stats>?.toStatsEntityList(): List<StatsEntity> {
+/**
+ * Convert a list of [Stats] object to a ist of [StatsEntity] object.
+ * @return the list of [StatsEntity] object.
+ */
+fun List<Stats>?.toStatsEntityList(): List<StatsEntity> {
     return this?.map {
         StatsEntity(name = it.stat?.name ?: "", value = it.baseStat ?: 0)
     } ?: emptyList()

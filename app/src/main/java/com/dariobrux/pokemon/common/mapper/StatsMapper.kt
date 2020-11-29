@@ -1,4 +1,4 @@
-package com.dariobrux.pokemon.common
+package com.dariobrux.pokemon.common.mapper
 
 import android.graphics.Color
 import java.util.*

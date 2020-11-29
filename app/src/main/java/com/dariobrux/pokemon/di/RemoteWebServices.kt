@@ -14,9 +14,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * Remote Web Service datasource
  */
 val remoteWebServiceModule = module {
-    // provided web components
+
     single { createOkHttpClient() }
-    // Fill property
     single { createWebService<PokemonApi>(get(), getProperty(SERVER_URL)) }
 }
 
