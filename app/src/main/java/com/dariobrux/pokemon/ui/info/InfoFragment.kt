@@ -43,9 +43,9 @@ class InfoFragment : DialogFragment() {
 
             txtNumber.text = getString(R.string.format_number, pokemon.id)
 
-            txtBaseExperience.text = getString(R.string.format_exp, pokemon.baseExperience)
-
             txt.text = pokemon.name.capitalize(Locale.getDefault())
+
+            txtBaseExperience.text = getString(R.string.format_exp, pokemon.baseExperience)
 
             recyclerTypes.let {
                 it.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
