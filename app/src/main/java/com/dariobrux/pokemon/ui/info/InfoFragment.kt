@@ -36,7 +36,7 @@ class InfoFragment : DialogFragment() {
         with(binding!!) {
             card.transitionName = pokemon.name
 
-            img.loadImage(requireContext(), pokemon.image) {
+            img.loadImage(requireContext(), pokemon.images.first().url) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
             }

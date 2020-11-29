@@ -32,7 +32,7 @@ class MainAdapter(private val context: Context, private val listener: OnItemSele
         fun bind(item: PokemonEntity) = with(binding) {
             card.transitionName = item.name
             txt.text = item.name.capitalize(Locale.getDefault())
-            img.loadImage(context, item.image) {
+            img.loadImage(context, item.images.first().url) {
                 card.setCardBackgroundColor(it.withAlpha(220))
             }
             card.setOnClickListener {

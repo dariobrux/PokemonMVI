@@ -13,7 +13,7 @@ data class PokemonEntity(
     var name: String = "",
 
     @NonNull
-    var image: String = "",
+    var images: List<ImageEntity> = listOf(),
 
     @NonNull
     var types: List<TypeEntity> = listOf(),
