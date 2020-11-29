@@ -35,8 +35,8 @@
         app:rcBackgroundColor="@color/white"
         app:rcMax="300"
         app:rcRadius="90dp"
+        app:rcAnimationEnable="true"
         app:rcTextPositionPriority="inside"
-        app:rcTextProgress="40"
         app:rcTextProgressColor="#111111"
         app:rcTextProgressSize="12sp" />
 

@@ -5,29 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.loadImage
-import com.dariobrux.pokemon.common.withAlpha
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.FragmentInfoBinding
 import com.dariobrux.pokemon.ui.util.StatsSpaceItemDecoration
 import com.dariobrux.pokemon.ui.util.TypeSpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class InfoFragment : DialogFragment() {
 
-    private val viewModel: InfoViewModel by viewModel()
-
-    // Binding
-    private var _binding: FragmentInfoBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
+    private var binding: FragmentInfoBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,23 +26,24 @@ class InfoFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentInfoBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentInfoBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val pokemon = arguments?.getSerializable("pokemon") as? PokemonEntity ?: return
 
-        with(binding) {
+        with(binding!!) {
             card.transitionName = pokemon.name
 
             img.loadImage(requireContext(), pokemon.image) {
                 infoContainerRoot.setBackgroundColor(it)
                 card.setCardBackgroundColor(it)
-                toolbar.setBackgroundColor(it)
             }
 
             txtNumber.text = getString(R.string.format_number, pokemon.id)
+
+            txtBaseExperience.text = getString(R.string.format_exp, pokemon.baseExperience)
 
             txt.text = pokemon.name.capitalize(Locale.getDefault())
 
@@ -75,6 +67,8 @@ class InfoFragment : DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding?.recyclerStats?.adapter = null
+        binding?.recyclerTypes?.adapter = null
+        binding = null
     }
 }

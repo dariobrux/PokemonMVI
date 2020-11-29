@@ -16,7 +16,8 @@ fun PokemonInfo.toPokemonEntity(): PokemonEntity {
         stats = this.stats?.map {
             StatsEntity(name = it.stat?.name ?: "", value = it.baseStat ?: 0)
         } ?: emptyList(),
-        id = this.id ?: 0
+        id = this.id ?: 0,
+        baseExperience = this.baseExperience ?: 0
     )
 }
 

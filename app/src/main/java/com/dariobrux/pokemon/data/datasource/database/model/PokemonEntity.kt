@@ -24,4 +24,7 @@ data class PokemonEntity(
     @NonNull
     var id: Int = 0,
 
+    @NonNull
+    var baseExperience: Int = 0
+
 ) : Serializable
