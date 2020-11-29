@@ -31,14 +31,9 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private var mainAdapter : MainAdapter? = null
 
-//    private var totalScroll = 0
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        retainInstance = true
-        mainAdapter = MainAdapter(requireContext(), this)//.apply {
-//            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-//        }
+        mainAdapter = MainAdapter(requireContext(), this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -60,15 +55,6 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
             it.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
             it.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
             it.recycler.adapter = mainAdapter
-//            it.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                    super.onScrolled(recyclerView, dx, dy)
-//                    totalScroll += dy
-//                }
-//            })
-//            it.recycler.postDelayed( {
-//                it.recycler.layoutManager!!.scrollToPosition(45)
-//            }, 2000)
         }
 
     }
