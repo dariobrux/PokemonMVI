@@ -10,7 +10,7 @@ import org.koin.dsl.module
  */
 val mockWebServiceModule = module(override = true) {
     // provided web components
-    single { createOkHttpClient(get()) }
-    single { MockInterceptor(get()) }
-    single<JsonReader> { AndroidReader(get()) }
+//    single { createOkHttpClient(get()) }
+//    single { MockInterceptor(get()) }
+//    single<JsonReader> { AndroidReader(get()) }
 }
