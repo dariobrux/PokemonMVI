@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dariobrux.pokemon.ui.util.SquareMaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/regular_card_height"
+    android:layout_height="match_parent"
     app:cardCornerRadius="@dimen/regular_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/regular_padding"
             android:paddingEnd="@dimen/regular_padding"
-            android:paddingBottom="@dimen/regular_padding"
+            android:paddingBottom="@dimen/small_padding"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,4 +43,4 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+</com.dariobrux.pokemon.ui.util.SquareMaterialCardView>
