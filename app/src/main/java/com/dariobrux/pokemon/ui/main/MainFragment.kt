@@ -15,7 +15,7 @@ import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.extension.toGone
 import com.dariobrux.pokemon.common.extension.toVisible
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
-import com.dariobrux.pokemon.data.repository.IPokemonRepository
+import com.dariobrux.pokemon.data.repository.State
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.PokemonSpaceItemDecoration
 import com.google.android.material.card.MaterialCardView
@@ -26,6 +26,13 @@ import kotlinx.coroutines.launch
 import org.aviran.cookiebar2.CookieBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ *
+ * Created by Dario Bruzzese on 24/11/2020.
+ *
+ * This fragment displays the list of Pokemon.
+ *
+ */
 class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModel()
@@ -63,10 +70,10 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                IPokemonRepository.State.LOADING -> {
+                State.LOADING -> {
                     showLoading()
                 }
-                IPokemonRepository.State.ERROR -> {
+                State.ERROR -> {
                     showError()
                 }
                 else -> {

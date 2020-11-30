@@ -13,6 +13,13 @@ import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.databinding.PokemonItemListBinding
 import java.util.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 27/11/2020.
+ *
+ * This adapter displays the Pokemon.
+ *
+ */
 class MainAdapter(private val context: Context, private val listener: OnItemSelectedListener?) : PagingDataAdapter<PokemonEntity, MainAdapter.PokemonViewHolder>(PokemonComparator) {
 
     interface OnItemSelectedListener {

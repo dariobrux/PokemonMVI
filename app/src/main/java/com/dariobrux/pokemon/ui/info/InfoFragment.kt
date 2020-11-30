@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionInflater
 import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.extension.loadImage
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
@@ -16,6 +15,13 @@ import com.dariobrux.pokemon.ui.util.StatsSpaceItemDecoration
 import com.dariobrux.pokemon.ui.util.TypeSpaceItemDecoration
 import java.util.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 24/11/2020.
+ *
+ * This fragment displays he Pokemon info.
+ *
+ */
 class InfoFragment : DialogFragment() {
 
     private var binding: FragmentInfoBinding? = null
@@ -59,10 +65,6 @@ class InfoFragment : DialogFragment() {
                 it.adapter = StatsAdapter(requireContext(), pokemon.stats)
             }
         }
-
-        sharedElementEnterTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)
-        sharedElementReturnTransition = TransitionInflater.from(this.context).inflateTransition(R.transition.transition)
-
     }
 
     override fun onDestroyView() {

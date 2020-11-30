@@ -12,6 +12,13 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
 
+/**
+ *
+ * Created by Dario Bruzzese on 24/11/2020.
+ *
+ * This is the application, where init Dependency Injection and other
+ * useful libraries.
+ */
 class MainApplication : Application() {
 
     override fun onCreate() {

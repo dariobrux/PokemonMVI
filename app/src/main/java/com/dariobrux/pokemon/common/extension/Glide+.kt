@@ -17,7 +17,7 @@ import com.dariobrux.pokemon.common.extension.getDominantColor
  *
  * Created by Dario Bruzzese on 29/11/2020.
  *
- * This file contains all the extended methods for Glide.
+ * This file contains all Glide (applied to ImageView) extended methods.
  *
  */
 

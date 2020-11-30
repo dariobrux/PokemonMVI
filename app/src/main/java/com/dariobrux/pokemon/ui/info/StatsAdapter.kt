@@ -9,6 +9,13 @@ import com.dariobrux.pokemon.data.datasource.database.model.StatsEntity
 import com.dariobrux.pokemon.databinding.StatsItemListBinding
 import java.util.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 28/11/2020.
+ *
+ * This adapter displays the Pokemon stats items.
+ *
+ */
 class StatsAdapter(private val context: Context, private val items: List<StatsEntity>) : RecyclerView.Adapter<StatsAdapter.TypeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {

@@ -12,12 +12,20 @@ import com.dariobrux.pokemon.data.datasource.webservice.PokemonApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
-class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO, private val state: MutableLiveData<IPokemonRepository.State>) : PagingSource<Int, PokemonEntity>() {
+/**
+ *
+ * Created by Dario Bruzzese on 27/11/2020.
+ *
+ * This class is the Paging Data Source, it retrieves the "next" data starting from
+ * the previous data.
+ *
+ */
+class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO, private val state: MutableLiveData<State>) : PagingSource<Int, PokemonEntity>() {
 
     @ExperimentalCoroutinesApi
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonEntity> {
         return try {
-            state.value = IPokemonRepository.State.LOADING
+            state.value = State.LOADING
 
             var limit: Int? = 20
             val nextPageNumber = params.key ?: 0
@@ -53,7 +61,7 @@ class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO
                     }
                 }
             }
-            state.value = IPokemonRepository.State.LOADED
+            state.value = State.LOADED
 
             LoadResult.Page(
                 data = pokemonEntityList,
@@ -61,7 +69,7 @@ class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO
                 nextKey = next
             )
         } catch (e: Exception) {
-            state.value = IPokemonRepository.State.ERROR
+            state.value = State.ERROR
             LoadResult.Error(e)
         }
     }

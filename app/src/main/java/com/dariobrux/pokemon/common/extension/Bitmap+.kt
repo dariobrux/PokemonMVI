@@ -4,6 +4,14 @@ import android.graphics.Bitmap
 import androidx.palette.graphics.Palette
 
 /**
+ *
+ * Created by Dario Bruzzese on 29/11/2020.
+ *
+ * This file contains all the Bitmap extended methods.
+ *
+ */
+
+/**
  * Given a [Bitmap], get the dominant color of it. It works async.
  * @param defaultColor a color to return if call fails.
  * @param onColorDetected function that returns the color when the task ends.

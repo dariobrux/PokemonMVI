@@ -5,6 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
+/**
+ *
+ * Created by Dario Bruzzese on 26/11/2020.
+ *
+ * This class is the Pokemon database model.
+ *
+ */
 @Entity(tableName = "pokemon")
 data class PokemonEntity(
 

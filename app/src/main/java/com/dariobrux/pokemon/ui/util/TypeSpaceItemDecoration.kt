@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 /**
  *
- * Created by Dario Bruzzese on 22/10/2020.
+ * Created by Dario Bruzzese on 28/11/2020.
  *
- * This class is the ItemDecoration useful for the RecyclerView in grid visualization.
+ * This class is the ItemDecoration useful for the RecyclerView for Pokemon types.
  */
 class TypeSpaceItemDecoration(private val space: Int) : ItemDecoration() {
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {

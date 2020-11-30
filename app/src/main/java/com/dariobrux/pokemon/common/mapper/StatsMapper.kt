@@ -3,8 +3,19 @@ package com.dariobrux.pokemon.common.mapper
 import android.graphics.Color
 import java.util.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 27/11/2020.
+ *
+ * This object class is a mapper for Stats object.
+ *
+ */
 object StatsMapper {
 
+    /**
+     * @param name the stats name
+     * @return a pair containing the stats abbreviation and corresponding color.
+     */
     fun getStatsAbbreviationColor(name: String): Pair<String, Int> {
         return when (name.toLowerCase(Locale.getDefault())) {
             "attack" -> "ATK" to Color.parseColor("#f06292") // Pink 300

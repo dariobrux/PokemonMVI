@@ -12,6 +12,13 @@ import com.dariobrux.pokemon.data.datasource.database.model.TypeEntity
 import com.dariobrux.pokemon.databinding.TypeItemListBinding
 import java.util.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 28/11/2020.
+ *
+ * This adapter displays the Pokemon type items.
+ *
+ */
 class TypeAdapter(private val context: Context, private val items: List<TypeEntity>) : RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {

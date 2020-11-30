@@ -14,7 +14,7 @@ import com.dariobrux.pokemon.domain.model.root.Results
  *
  * Created by Dario Bruzzese on 25/11/2020.
  *
- * This file contains all the extended methods for Pokemon related objects.
+ * This file contains all the Pokemon object related extended methods.
  *
  */
 

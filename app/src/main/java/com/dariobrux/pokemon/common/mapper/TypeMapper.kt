@@ -2,8 +2,20 @@ package com.dariobrux.pokemon.common.mapper
 
 import android.graphics.Color
 
+/**
+ *
+ * Created by Dario Bruzzese on 27/11/2020.
+ *
+ * This object class is a mapper for Type object.
+ *
+ */
 object TypeMapper {
 
+    /**
+     * Get the color associated to the Pokemon type.
+     * @param name the type name.
+     * @return the corresponding unique color for a specific type.
+     */
     fun getTypeColor(name: String): Int {
         return Color.parseColor(
             when (name) {

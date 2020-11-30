@@ -5,6 +5,12 @@ import android.util.AttributeSet;
 
 import com.google.android.material.card.MaterialCardView;
 
+/**
+ *
+ * Created by Dario Bruzzese on 29/10/2020.
+ *
+ * This widget is a square MaterialCardView.
+ */
 public class SquareMaterialCardView extends MaterialCardView {
 
     public SquareMaterialCardView(Context context) {

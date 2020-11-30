@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 /**
  *
- * Created by Dario Bruzzese on 22/10/2020.
+ * Created by Dario Bruzzese on 27/11/2020.
  *
  * This class is the ItemDecoration useful for the RecyclerView in grid visualization.
  */

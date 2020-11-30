@@ -6,7 +6,7 @@ import android.net.Uri
  *
  * Created by Dario Bruzzese on 27/11/2020.
  *
- * This file contains all the extended methods for Pokemon related objects.
+ * This file contains all the Url (as String) extended methods.
  *
  */
 

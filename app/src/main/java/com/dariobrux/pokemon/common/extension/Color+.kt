@@ -7,7 +7,7 @@ import androidx.annotation.ColorInt
  *
  * Created by Dario Bruzzese on 29/11/2020.
  *
- * This file contains all the extended methods for Color object (as Int).
+ * This file contains all the Color object (as Int) extended methods.
  *
  */
 

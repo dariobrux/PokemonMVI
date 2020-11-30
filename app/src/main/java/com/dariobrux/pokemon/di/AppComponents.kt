@@ -9,13 +9,14 @@ import org.koin.dsl.module
 
 /**
  *
- * Created by Dario Bruzzese on 29/11/2020.
+ * Created by Dario Bruzzese on 24/11/2020.
  *
- * This class is one of the Koin Dependency Injection creator classes in this project.
+ * This file is one of the Koin Dependency Injection creator objects in this project.
  * It creates the dependency injection for the application module, especially for the
  * ViewModel, the Use Cases and the Repository.
  *
  */
+
 val appModule = module {
 
     viewModel { MainViewModel(get()) }
@@ -26,5 +27,4 @@ val appModule = module {
 }
 
 val onlinePokemonApp = appModule + remoteWebServiceModule
-val offlinePokemonApp = onlinePokemonApp + mockWebServiceModule
-val offlineDatabasePokemonApp = offlinePokemonApp + roomDatabaseModule
+val offlineDatabasePokemonApp = onlinePokemonApp + roomDatabaseModule

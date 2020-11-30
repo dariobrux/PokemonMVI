@@ -12,6 +12,13 @@ import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.databinding.FragmentSplashBinding
 import kotlinx.coroutines.*
 
+/**
+ *
+ * Created by Dario Bruzzese on 24/11/2020.
+ *
+ * This fragment displays the splash screen.
+ *
+ */
 class SplashFragment : Fragment() {
 
     private var binding: FragmentSplashBinding? = null

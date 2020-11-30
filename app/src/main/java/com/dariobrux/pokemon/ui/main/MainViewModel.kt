@@ -5,6 +5,11 @@ import io.uniflow.androidx.flow.AndroidDataFlow
 import io.uniflow.core.flow.data.UIEvent
 import io.uniflow.core.flow.data.UIState
 
+/**
+ *
+ * Created by Dario Bruzzese on 24/11/2020.
+ *
+ */
 class MainViewModel(private val pokemonList: GetPokemonList) : AndroidDataFlow() {
 
     var state = pokemonList.state

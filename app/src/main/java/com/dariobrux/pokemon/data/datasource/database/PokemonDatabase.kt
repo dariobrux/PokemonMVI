@@ -11,6 +11,13 @@ import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.data.datasource.database.model.StatsEntity
 import com.dariobrux.pokemon.data.datasource.database.model.TypeEntity
 
+/**
+ *
+ * Created by Dario Bruzzese on 26/10/2020.
+ *
+ * This class is the representation of the database.
+ *
+ */
 @Database(
     entities = [
         PokemonEntity::class,

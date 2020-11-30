@@ -1,29 +1,25 @@
 package com.dariobrux.pokemon.common.extension
 
-import android.animation.ValueAnimator
 import android.view.View
-import androidx.cardview.widget.CardView
 
 /**
- * Animate the card background color of a [CardView] starting from a color, ending to another color using
- * the argb evaluator.
- * @param startColor the start color.
- * @param toColor the final color.
+ *
+ * Created by Dario Bruzzese on 27/11/2020.
+ *
+ * This file contains all View extended methods.
+ *
  */
-fun CardView.animateCardBackgroundColor(startColor: Int, toColor: Int) {
-    val anim: ValueAnimator = ValueAnimator.ofArgb(startColor, toColor)
-    anim.duration = 0
-    anim.addUpdateListener {
-        val color = it.animatedValue as Int
-        this.setCardBackgroundColor(color)
-    }
-    anim.start()
-}
 
+/**
+ * Set the visibility to VISIBLE.
+ */
 fun View.toVisible() {
     this.visibility = View.VISIBLE
 }
 
+/**
+ * Set the visibility to GONE.
+ */
 fun View.toGone() {
     this.visibility = View.GONE
 }
