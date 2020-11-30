@@ -1,6 +1,5 @@
 package com.dariobrux.pokemon.data.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import com.dariobrux.pokemon.common.extension.getLimitParameter
@@ -13,13 +12,12 @@ import com.dariobrux.pokemon.data.datasource.webservice.PokemonApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
-class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO, private val state: MutableLiveData<PokemonRepository.State>) : PagingSource<Int, PokemonEntity>() {
+class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO, private val state: MutableLiveData<IPokemonRepository.State>) : PagingSource<Int, PokemonEntity>() {
 
     @ExperimentalCoroutinesApi
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonEntity> {
         return try {
-            Timber.d("LOADD LOAD")
-            state.value = PokemonRepository.State.LOADING
+            state.value = IPokemonRepository.State.LOADING
 
             var limit: Int? = 20
             val nextPageNumber = params.key ?: 0
@@ -55,8 +53,7 @@ class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO
                     }
                 }
             }
-            Timber.d("LOADD LOADED")
-            state.value = PokemonRepository.State.LOADED
+            state.value = IPokemonRepository.State.LOADED
 
             LoadResult.Page(
                 data = pokemonEntityList,

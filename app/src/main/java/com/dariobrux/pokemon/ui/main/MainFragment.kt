@@ -15,6 +15,7 @@ import com.dariobrux.pokemon.R
 import com.dariobrux.pokemon.common.extension.toGone
 import com.dariobrux.pokemon.common.extension.toVisible
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
+import com.dariobrux.pokemon.data.repository.IPokemonRepository
 import com.dariobrux.pokemon.data.repository.PokemonRepository
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.PokemonSpaceItemDecoration
@@ -52,7 +53,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
                 is UIState.Failed -> showError(state.error)
             }
         }
-        viewModel.getPokemonList(0, 1117)
+        viewModel.getPokemonList()
 
         binding?.let {
             it.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
@@ -62,7 +63,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                PokemonRepository.State.LOADING -> {
+                IPokemonRepository.State.LOADING -> {
                     showLoading()
                 }
                 else -> {
@@ -104,10 +105,6 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     private fun showError(error: UIError?) {
         // TODO("Not yet implemented")
-    }
-
-    private fun showIsLoading() {
-
     }
 
     private fun showIsLoaded(state: MainState) {
