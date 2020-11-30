@@ -63,9 +63,9 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         viewModel.getPokemonList()
 
         binding?.let {
-            it.recycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-            it.recycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
-            it.recycler.adapter = mainAdapter
+            it.mainRecycler.layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+            it.mainRecycler.addItemDecoration(PokemonSpaceItemDecoration(requireContext().resources.getDimensionPixelSize(R.dimen.regular_padding)))
+            it.mainRecycler.adapter = mainAdapter
         }
 
         viewModel.state.observe(viewLifecycleOwner) {
@@ -109,7 +109,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding?.recycler?.adapter = null
+        binding?.mainRecycler?.adapter = null
         binding = null
     }
 
