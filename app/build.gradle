@@ -63,6 +63,9 @@ dependencies {
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation "org.robolectric:robolectric:4.4"
 
+    // CookieBar
+    implementation 'com.github.dariobrux:cookieBar2:1.1.5'
+
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

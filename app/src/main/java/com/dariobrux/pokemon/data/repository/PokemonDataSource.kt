@@ -61,6 +61,7 @@ class PokemonDataSource(private val api: PokemonApi, private val dao: PokemonDAO
                 nextKey = next
             )
         } catch (e: Exception) {
+            state.value = IPokemonRepository.State.ERROR
             LoadResult.Error(e)
         }
     }

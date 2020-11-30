@@ -6,4 +6,6 @@
     <string name="format_number">#%d</string>
     <string name="format_exp">(EXP %d)</string>
     <string name="pikachu">Pikachu</string>
+    <string name="wrong_message">Something\'s gone wrong.</string>
+    <string name="oops">Oops</string>
 </resources>

@@ -16,17 +16,15 @@ import com.dariobrux.pokemon.common.extension.toGone
 import com.dariobrux.pokemon.common.extension.toVisible
 import com.dariobrux.pokemon.data.datasource.database.model.PokemonEntity
 import com.dariobrux.pokemon.data.repository.IPokemonRepository
-import com.dariobrux.pokemon.data.repository.PokemonRepository
 import com.dariobrux.pokemon.databinding.FragmentMainBinding
 import com.dariobrux.pokemon.ui.util.PokemonSpaceItemDecoration
 import com.google.android.material.card.MaterialCardView
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.data.UIError
 import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.aviran.cookiebar2.CookieBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
 
@@ -35,6 +33,8 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
     private var binding: FragmentMainBinding? = null
 
     private var mainAdapter: MainAdapter? = null
+
+    private var cookieBar: CookieBar? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,7 +50,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         onStates(viewModel) { state ->
             when (state) {
                 is MainState -> showIsLoaded(state)
-                is UIState.Failed -> showError(state.error)
+                is UIState.Failed -> showError()
             }
         }
         viewModel.getPokemonList()
@@ -65,6 +65,9 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
             when (it) {
                 IPokemonRepository.State.LOADING -> {
                     showLoading()
+                }
+                IPokemonRepository.State.ERROR -> {
+                    showError()
                 }
                 else -> {
                     hideLoading()
@@ -103,8 +106,14 @@ class MainFragment : Fragment(), MainAdapter.OnItemSelectedListener {
         binding = null
     }
 
-    private fun showError(error: UIError?) {
-        // TODO("Not yet implemented")
+    private fun showError() {
+        cookieBar = CookieBar.build(requireActivity()).apply {
+            setDuration(10_000)
+            setCookiePosition(CookieBar.BOTTOM)
+            setTitle(getString(R.string.oops))
+            setMessage(getString(R.string.wrong_message))
+            setBackgroundColor(R.color.red_400)
+        }.show()
     }
 
     private fun showIsLoaded(state: MainState) {

@@ -14,6 +14,7 @@ interface IPokemonRepository {
     enum class State {
         DEFAULT,
         LOADING,
-        LOADED
+        LOADED,
+        ERROR
     }
 }
